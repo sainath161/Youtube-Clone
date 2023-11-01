@@ -15,8 +15,8 @@
 <body>
     <nav id="navbar">
         <div id="logos">
-            <div id="firstlogo">
-                <img src="images/menu.svg" alt="menu">
+            <div id="menu-button" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
             </div>
             <div id="secondlogo">
                 <img src="images/Logo.svg" alt="logo" class="ytLogo">
@@ -24,10 +24,10 @@
         </div>
         <div id="inputs">
             <div id="search-container">
-                <input type="text" placeholder="Search" id="search-bar">
-                <i class="fa-solid fa-magnifying-glass" id="search"></i>
+                <input type="text" placeholder="Search" id="query" onkeypress="searchOnEnter(event)">
+                <i class="fa-solid fa-magnifying-glass" id="search" onclick="search()"></i>
             </div>
-            <img src="images/mic.svg" alt="mic" id="mic">
+            <i class="fa-solid fa-microphone" id="mic" onclick="voiceSearch()"></i>
         </div>
         <div id="profiles" style="background: none;">
             <img src="images/create.svg" alt="Create">
@@ -37,6 +37,11 @@
                 alt="profile" style="border-radius: 50%;">
         </div>
     </nav>
+    <div id="sidebar">
+        <!-- Sidebar content goes here -->
+        <!-- Close button to hide the sidebar -->
+        
+    </div>
     <div id="container"></div>
     <script src="js/script.js"></script>
 </body>

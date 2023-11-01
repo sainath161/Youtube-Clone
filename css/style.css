@@ -1,15 +1,15 @@
 * {
     background-color: #212121;
-    top: 0;
 }
 
 #navbar {
     display: flex;
     justify-content: space-between;
-    height: 80px;
+    height: 10%;
     align-items: center;
     position: fixed;
     width: 100%;
+    top: 0;
 }
 
 #navbar>div {
@@ -33,8 +33,9 @@
     margin: auto;
 }
 
-#firstlogo img {
-    width: 30px;
+#menu-button {
+    font-size: 22px;
+    color: white;
 }
 
 #secondlogo img {
@@ -62,6 +63,7 @@
     background: none;
     font-size: 20px;
     text-align: center;
+    cursor: pointer;
 }
 
 #profiles {
@@ -82,7 +84,7 @@
     align-items: center;
 }
 
-#search-bar {
+#query {
     flex: 1;
     border: none;
     outline: none;
@@ -92,21 +94,44 @@
 }
 
 #mic {
-    background-color: black;
+    color: #ffffff;
+    cursor: pointer;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    width: 2.5rem;
+    text-align: center;
+    font-size: 20px;
+    background: #303030;
     border-radius: 50%;
-    width: 7% !important;
 }
 
-#container
-{
+#container {
     width: 95%;
     margin: auto;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
     grid-template-rows: auto;
     gap: 30px;
+    margin-top: 6%;
 }
 
-#container>div img{
+#container>div img {
     width: 100%;
+}
+
+#sidebar {
+    position: fixed;
+    width: 0;
+    height: 100%;
+    background-color: #303030;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    z-index: 1;
+}
+
+/* Updated container style */
+#container {
+    width: calc(100% - 250px); /* Adjust the width based on the sidebar width */
+    margin-left: 270px; /* Adjust the initial margin */
+    transition: 0.5s;
 }
