@@ -262,3 +262,16 @@ function hideLoader() {
   const loader = document.getElementById('loader');
   loader.style.display = 'none';
 }
+
+
+const showMoreButton = document.getElementById('showMoreButton');
+const hiddenOptionsContainer = document.getElementById('hiddenOptionsContainer');
+showMoreButton.addEventListener('click', () => {
+  if(hiddenOptionsContainer.style.display === 'none' || hiddenOptionsContainer.style.display === '') {
+    hiddenOptionsContainer.style.display = 'block';
+    showMoreButton.innerText = "Show less";
+  } else {
+    hiddenOptionsContainer.style.display = 'none';
+    showMoreButton.textContent = 'Show More';
+  }
+});
