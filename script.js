@@ -1,97 +1,75 @@
-const API_KEY = "AIzaSyCVwKurSR0Sb346-lhcAH2sPzjzp01t-cU";
+// YouTube API key and base URL
+const API_KEY = "AIzaSyDyCxxKSch8Figxgwh2WMK5_u89ZDgUxLs";
 const BASE_URL = "https://www.googleapis.com/youtube/v3";
 
-
+// Function to fetch video data based on a search query and maximum items
+// Modify the fetchData function in script.js
 async function fetchData(searchQuery, maxItems) {
-   let response = await fetch(`${BASE_URL}/search?key=${API_KEY}&q=${searchQuery}&maxResults=${maxItems}&part=snippet`);
-//   console.log(response);
-  // let response = await fetch("./dummy.json");
-  let data = await response.json();
+  try {
+    showLoader(); // Show loader before fetching data
 
-  let arr = data.items;
-  // console.log(arr);
-
-  // getVideoInfo('JhIBqykjzbs');
-
-  displayCards(arr,scrollableRightSections);
+    let response = await fetch(`${BASE_URL}/search?key=${API_KEY}&q=${searchQuery}&maxResults=${maxItems}&part=snippet`);
+    let data = await response.json();
+    let arr = data.items;
+    displayCards(arr, scrollableRightSections);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  } finally {
+    hideLoader(); // Hide loader after fetching data
+  }
 }
 
-window.addEventListener('load',() => {
-    fetchData("" ,12);
-})
 
+// Event listener to fetch data when the page loads
+window.addEventListener('load', () => {
+  fetchData("", 53);
+});
+
+// Event listener for the search button
 searchDiv.addEventListener("click", () => {
-  // console.log(searchInput.value);
   let Value = searchInput.value;
-  // console.log(searchInput.value);
-  fetchData(Value, 12);
-
+  fetchData(Value, 53);
   searchInput.value = "";
 });
 
+// Function to get video information based on video ID
 async function getVideoInfo(videoId) {
   let response = await fetch(`${BASE_URL}/videos?key=${API_KEY}&part=statistics&id=${videoId}`);
-  // let response = await fetch("./videoInfoDummy.json");
   let data = await response.json();
   return data.items;
-  // let videoInfo = data.items;
-  // console.log(videoInfo);
 }
 
-// getVideoInfo('JhIBqykjzbs');
-
+// Function to get channel logo based on channel ID
 async function getChannelLogo(channelId) {
   const response = await fetch(`${BASE_URL}/channels?key=${API_KEY}&part=snippet&id=${channelId}`);
-  // let response = await fetch("./channelLogodummy.json");
   const data = await response.json();
-
   return data.items;
 }
-// getChannelLogo('UCt2JXOLNxqry7B_4rRZME3Q');
 
-// get no of subscribers
-
+// Function to get subscription information based on channel ID
 async function getSubscription(channelid) {
-  // console.log(channelid);
-
   let response = await fetch(`${BASE_URL}/channels?key=${API_KEY}&id=${channelid}&part=statistics`);
-
-  // let response = await fetch("./subscribers.json");
-
   let data = await response.json();
   return data.items;
 }
 
-async function displayCards(data,displayBody) {
-
+// Function to display video cards on the page
+async function displayCards(data, displayBody) {
   console.log("kriika");
   displayBody.innerHTML = "";
   for (const ele of data) {
-    //  console.log(ele);
-
     let viewCountObj = await getVideoInfo(ele.id.videoId);
-    //    console.log(viewCountObj);
-    ele.viewObject = viewCountObj; // enjected array as object in ele object
-
+    ele.viewObject = viewCountObj;
     let channelInfoObject = await getChannelLogo(ele.snippet.channelId);
-    //    console.log(channelInfoObject);
     ele.channelObject = channelInfoObject;
-
     let subscribers = await getSubscription(ele.snippet.channelId);
-
     ele.subscriberCount = subscribers;
-
-    //    console.log(ele.subscriberCount[0].statistics.subscriberCount);
-
     let displayDuration = calDuration(ele.snippet.publishedAt);
-
     let videoCard = document.createElement("a");
-
     videoCard.className = "videoCard";
     videoCard.href = `./selectedVideo.html?videoId=${ele.id.videoId}`;
-    // console.log(ele.id.videoId);
 
-    // creating session storage
+    // Event listener to store selected video information in session storage
     videoCard.addEventListener("click", () => {
       const InfoSelectedVideo = {
         videoTitle: `${ele.snippet.title}`,
@@ -101,10 +79,7 @@ async function displayCards(data,displayBody) {
         channelID: `${ele.snippet.channelId}`,
         subscribers: `${ele.subscriberCount[0].statistics.subscriberCount}`,
       };
-      sessionStorage.setItem(
-        "selectedVideoInformation",
-        JSON.stringify(InfoSelectedVideo)
-      );
+      sessionStorage.setItem("selectedVideoInformation", JSON.stringify(InfoSelectedVideo));
     });
 
     videoCard.innerHTML = `<img src="${ele.snippet.thumbnails.high.url}">
@@ -115,30 +90,26 @@ async function displayCards(data,displayBody) {
         <div class="channelInfo">
             <p>${ele.snippet.channelTitle}</p>
             <p> ${calculateViews(
-              ele.viewObject[0].statistics.viewCount
-            )} views , ${displayDuration} ago </p>
+      ele.viewObject[0].statistics.viewCount
+    )} views , ${displayDuration} ago </p>
         </div>`;
 
-        displayBody.appendChild(videoCard);
+    displayBody.appendChild(videoCard);
   }
 }
 
-// cal duration
-
+// Function to calculate the duration since a video was published
 function calDuration(publisedDate) {
+  // Implementation for calculating duration...
   let displayTime;
   let publisedAt = new Date(publisedDate);
   let MiliSecFromPublised = publisedAt.getTime();
-
   let currentTime = new Date();
-
   let currentTimeInMiliSec = currentTime.getTime();
-
   let duration = currentTimeInMiliSec - MiliSecFromPublised;
-
   let days = parseInt(duration / 86400000);
-
   if (days < 1) {
+
     let hours = parseInt(duration / 3600000);
     displayTime = hours + " " + "hours";
   } else if (days > 6 && days <= 29) {
@@ -157,9 +128,9 @@ function calDuration(publisedDate) {
   return displayTime;
 }
 
-// cal views
-
+// Function to format views count
 function calculateViews(viewCount) {
+  // Implementation for formatting views count...
   let displayViews;
   let count;
   if (viewCount < 1000) {
@@ -169,39 +140,69 @@ function calculateViews(viewCount) {
   } else if (viewCount >= 1000000) {
     displayViews = (viewCount / 1000000).toFixed(1) + " " + "M";
   }
-
   return displayViews;
 }
-// toggle in menues
 
+// Event listener for the menu button to toggle small menu options
 let menuButton = document.getElementById("menubar");
-console.log(menuButton);
-
 menuButton.addEventListener('click', showSmallMenuOptions);
-// 
 
-function showSmallMenuOptions (){
-
+function showSmallMenuOptions() {
   let menuCards = document.getElementsByClassName("mo");
-
-
-  // console.log(menuCards);
-
-  for(let menu of menuCards){
-    if(menu.classList.contains("menuCards")){
+  for (let menu of menuCards) {
+    if (menu.classList.contains("menuCards")) {
       menu.classList.remove("menuCards");
       menu.classList.add("MENUCARDS");
-      leftSection.style.flex=1.5;
-      copyRightSystem.style.display="block";
-    }
-    else{
-      
-
+      leftSection.style.flex = 1.5;
+      copyRightSystem.style.display = "block";
+    } else {
       menu.classList.remove("MENUCARDS");
       menu.classList.add("menuCards");
-      leftSection.style.flex=.5;
-      copyRightSystem.style.display="none";
-      
+      leftSection.style.flex = 0.5;
+      copyRightSystem.style.display = "none";
     }
   }
+}
+
+
+// Function to toggle visibility of loader
+function toggleLoader(showLoader) {
+  let loader = document.getElementById("loader");
+  if (showLoader) {
+    loader.style.display = "block";
+  } else {
+    loader.style.display = "none";
+  }
+}
+
+// Function to fetch data (example with loader)
+async function fetchData(searchQuery, maxItems) {
+  try {
+    // Show loader while fetching data
+    toggleLoader(true);
+
+    let response = await fetch(`${BASE_URL}/search?key=${API_KEY}&q=${searchQuery}&maxResults=${maxItems}&part=snippet`);
+    let data = await response.json();
+    let arr = data.items;
+
+    // Hide loader after data is fetched
+    toggleLoader(false);
+
+    displayCards(arr, scrollableRightSections);
+  } catch (error) {
+    // Handle errors and hide loader
+    console.error(error);
+    toggleLoader(false);
+  }
+}
+
+// Add these functions at the beginning of script.js
+function showLoader() {
+  const loader = document.getElementById('loader');
+  loader.style.display = 'block';
+}
+
+function hideLoader() {
+  const loader = document.getElementById('loader');
+  loader.style.display = 'none';
 }

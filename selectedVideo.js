@@ -1,13 +1,11 @@
-// const API_KEY = "AIzaSyDc9OOshV9-8IUjdQYgD1G0y3_QZl0xXKA";
-// const BASE_URL = "https://www.googleapis.com/youtube/v3";
-
+// Get videoId from the URL parameters
 let urlParam = new URLSearchParams(window.location.search);
-
 let videoID = urlParam.get("videoId");
+
+// Get the main video container element
 let VideoContainer = document.getElementById("mainVideo");
 
-// window.postMessage(message, "http://127.0.0.1:5500");
-
+// Event listener to create a new YouTube player when the page loads
 window.addEventListener("load", () => {
   if (YT) {
     new YT.Player(VideoContainer, {
@@ -18,18 +16,14 @@ window.addEventListener("load", () => {
   }
 });
 
-// getting data on sesion storage
+// Variable to store selected video information from sessionStorage
 let getSelectedVideoInfo;
-
 const videoInfoString = sessionStorage.getItem("selectedVideoInformation");
 if (videoInfoString) {
   getSelectedVideoInfo = JSON.parse(videoInfoString);
-
-  // console.log(getSelectedVideoInfo);
 }
 
-//cal like count
-
+// Function to format likes count
 function calculateLikes(likeCount) {
   let displayViews;
   let count;
@@ -40,218 +34,160 @@ function calculateLikes(likeCount) {
   } else if (likeCount >= 1000000) {
     displayViews = (likeCount / 1000000).toFixed(1) + " " + "M";
   }
-
   return displayViews;
 }
-
+// Calculate likes count and subscribers count
 let correctLikeCount = calculateLikes(getSelectedVideoInfo.likeCount);
-
 let correctSubscriberCount = calculateLikes(getSelectedVideoInfo.subscribers);
 
-
-
-
-
-// displaying selected video info
+// Display selected video information in the main video info section
 let selectedVideoInfo = document.getElementById("mainVideoInfo");
-
 selectedVideoInfo.innerHTML = `
 <h3>${getSelectedVideoInfo.videoTitle}</h3>
-        <div class="videoInfo">
-          <div class="channel">
-            <img src="${getSelectedVideoInfo.channelLogo}" />
-            <div>
-              <h4>${getSelectedVideoInfo.channelName}</h4>
-              <p>${correctSubscriberCount} subscribers</p>
-            </div>
-            <button class="subscribe">Subscribe</button>
-          </div>
+<div class="videoInfo">
+  <div class="channel">
+    <img src="${getSelectedVideoInfo.channelLogo}" />
+    <div>
+      <h4>${getSelectedVideoInfo.channelName}</h4>
+      <p>${correctSubscriberCount} subscribers</p>
+    </div>
+    <button class="subscribe">Subscribe</button>
+  </div>
+  <div  class="channel">
+    <button class="likeButton">
+      <i class="fa-regular fa-thumbs-up" style="color: #080808;"></i>
+      <pre>${correctLikeCount}</pre>
+      <div class="horizontalLine"></div>
+      <i class="fa-regular fa-thumbs-down" style="color: #080808;"></i>
+    </button>
+    <button class="likeButton">
+      <i class="fa-regular fa-share-from-square" style="color: #0a0a0a;"></i>
+      Share
+    </button>
+    <button class="likeButton">
+      <i class="fa-solid fa-ellipsis" style="color: #0c0d0d;"></i>
+    </button>
+  </div>
+</div>`;
 
-          <div  class="channel">
-            <button class="likeButton">
-                <i class="fa-regular fa-thumbs-up" style="color: #080808;"></i>
-                <pre>${correctLikeCount}</pre>
-                <div class="horizontalLine"></div>
-                <i class="fa-regular fa-thumbs-down" style="color: #080808;"></i>
-            </button>
-            <button class="likeButton">
-                <i class="fa-regular fa-share-from-square" style="color: #0a0a0a;"></i>
-                Share
-            </button>
-            <button class="likeButton">
-                <i class="fa-solid fa-ellipsis" style="color: #0c0d0d;"></i>
-            </button>
-          </div>
-        </div>`;
-
-// get comments
+// Function to fetch comments for the specific video
 async function getComments(specificvideoID) {
   try {
     let response = await fetch(`${BASE_URL}/commentThreads?key=${API_KEY}&videoId=${specificvideoID}&maxResults=20&part=snippet`)
-    // let response = await fetch("./comments.json");
-
     const data = await response.json();
-
     let commentsArr = data.items;
-
-    // console.log(commentsArr);
+    // Call a function to display the fetched comments
     displayComments(commentsArr);
   } catch (err) {
     console.log(err);
   }
 }
-
+// Call the function to fetch and display comments
 getComments(videoID);
 
+// Container for displaying user comments
 let userCommentDiv = document.getElementById("userCommentSection");
 
+// Function to display comments on the page
 function displayComments(data) {
   for (let ele of data) {
-    // console.log(ele);
     let individualCommentDiv = document.createElement("div");
-
     individualCommentDiv.innerHTML = `
-<div class="userComment channel">
-            
-              <img src="${ele.snippet.topLevelComment.snippet.authorProfileImageUrl}">
-              
-          
-          <div class="userCommented">
-              <p>@${ele.snippet.topLevelComment.snippet.authorDisplayName}</p>
-              <p>${ele.snippet.topLevelComment.snippet.textDisplay}</p>
-          </div>
-          </div>
-          <div class="comentLikeDislike">
-           <div>
-            <i class="fa-regular fa-thumbs-up" style="color: #080808"></i>
-
-            <i class="fa-regular fa-thumbs-down" style="color: #080808"></i>
-          </div>
-          <p>Reply</p>
-
-          </div>
-`;
+      <div class="userComment channel">
+        <img src="${ele.snippet.topLevelComment.snippet.authorProfileImageUrl}">
+        <div class="userCommented">
+          <p>@${ele.snippet.topLevelComment.snippet.authorDisplayName}</p>
+          <p>${ele.snippet.topLevelComment.snippet.textDisplay}</p>
+        </div>
+      </div>
+      <div class="comentLikeDislike">
+        <div>
+          <i class="fa-regular fa-thumbs-up" style="color: #080808"></i>
+          <i class="fa-regular fa-thumbs-down" style="color: #080808"></i>
+        </div>
+        <p>Reply</p>
+      </div>
+    `;
     userCommentDiv.appendChild(individualCommentDiv);
   }
 }
 
-// get recommended videos
-
+// Container for recommended videos
 let recommendedSectionDiv = document.getElementById("recommendedVideo");
+
+// Function to fetch recommended videos based on the selected video's title
 async function getRecommendedVideos(videoTitle) {
   try {
-    
-
     let response = await fetch(`${BASE_URL}/search?key=${API_KEY}&q=${videoTitle}&maxResults=16&part=snippet`);
-    
-    // const response = await fetch(`./recommendedVideo.json`);
-
     let data = await response.json();
-
     let arr = data.items;
-    
-
+    // Call a function to display the fetched recommended videos
     displayRecommendedData(arr);
-    
-
     console.log(data);
   } catch (err) {
     console.log(err);
   }
 }
+// Call the function to fetch and display recommended videos
 getRecommendedVideos(getSelectedVideoInfo.videoTitle);
-
-
-async function displayRecommendedData (data) {
-
-console.log("erf");
+// Function to display recommended videos on the page
+async function displayRecommendedData(data) {
+  console.log("erf");
   recommendedSectionDiv.innerHTML = "";
   for (const ele of data) {
-     console.log(ele);
-
+    console.log(ele);
     let viewCountObj = await getVideoInfo(ele.id.videoId);
-       console.log(viewCountObj);
-    ele.viewObject = viewCountObj; // enjected array as object in ele object
-
+    console.log(viewCountObj);
+    ele.viewObject = viewCountObj;
     let channelInfoObject = await getChannelLogo(ele.snippet.channelId);
-       console.log(channelInfoObject);
+    console.log(channelInfoObject);
     ele.channelObject = channelInfoObject;
-
-    // let subscribers = await getSubscription(ele.snippet.channelId);
-
-    // ele.subscriberCount = subscribers;
-
-    //    console.log(ele.subscriberCount[0].statistics.subscriberCount);
-
     let displayDuration = calDuration(ele.snippet.publishedAt);
-
     let recommendedVideoCard = document.createElement("div");
     recommendedVideoCard.className = "recommenedvideoCard";
-
     recommendedVideoCard.innerHTML = `<img src="${ele.snippet.thumbnails.high.url}">
     <div>
     <div class="channel">
-        
         <h4>${ele.snippet.title}</h4>
     </div>
     <div>
         <p>${ele.snippet.channelTitle}</p>
         <p> ${calculateViews(
-          ele.viewObject[0].statistics.viewCount
-        )} views , ${displayDuration} ago </p>
+      ele.viewObject[0].statistics.viewCount
+    )} views , ${displayDuration} ago </p>
     </div>
     </div>`;
-
-
-//     <div class="recommenedvideoCard">
-//     <img>
-//     <div>
-//     <div class="channel">
-       
-//         <h4>frtghyuj juiklo tyhh huejekje nbdht4ihoe hthe</h4>
-//     </div>
-//     <div >
-//         <p>erftg njii tg</p>
-//         <p> cdrvv nu</p>
-//     </div>
-//   </div>
-
-
-// </div>
-
-
-
     recommendedSectionDiv.appendChild(recommendedVideoCard);
-
   }
-
 }
 
-// like functionality
-
-// let thumpUpButton = document.getElementById("thumpUP");
-
-// let thumpDownButton = document.getElementById("thumpDown");
-
-// console.log(thumpUpButton,thumpDownButton);
-
-
-// comment functionality
-
+// Event listener for owner comments input
 let ownerComments = document.getElementById("ownerComment");
-
-console.log(ownerComments);
-ownerComments.addEventListener('keyup',addOwnerComment)
-
-function addOwnerComment (event){
-
-if(event.keyCode === 13 ){
-
-
-
-}
+ownerComments.addEventListener('keyup', addOwnerComment)
+// Function to handle owner comments input
+function addOwnerComment(event) {
+  if (event.keyCode === 13) {
+  }
 }
 
+// Modify the code in selectedVideo.js
+window.addEventListener("load", () => {
+  try {
+    showLoader(); // Show loader before loading the video
 
-
-
+    if (YT) {
+      new YT.Player(VideoContainer, {
+        height: "400",
+        width: "100%",
+        videoId: videoID,
+        events: {
+          'onReady': function (event) {
+            hideLoader(); // Hide loader after the video is ready
+          }
+        }
+      });
+    }
+  } catch (error) {
+    console.error('Error loading video:', error);
+  }
+});
