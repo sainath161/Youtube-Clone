@@ -1,5 +1,5 @@
 // YouTube API key and base URL
-const API_KEY = "AIzaSyDyCxxKSch8Figxgwh2WMK5_u89ZDgUxLs";
+const API_KEY = "AIzaSyAApTsqFshhvrPI_fTMTBOREKNuit_64Y4";
 const BASE_URL = "https://www.googleapis.com/youtube/v3";
 
 // Function to fetch video data based on a search query and maximum items
@@ -32,6 +32,63 @@ searchDiv.addEventListener("click", () => {
   searchInput.value = "";
 });
 
+// Add an event listener for "keyup" on the search input
+searchInput.addEventListener("keyup", (event) => {
+  if (event.keyCode === 13) {
+    // Check if Enter key is pressed (keyCode 13)
+    let value = searchInput.value;
+    fetchData(value, 12);
+
+    // Clear the input after searching if needed
+    // searchInput.value = "";
+  }
+});
+
+// Initialize speech recognition
+const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+
+// Add an event listener for the start event when speech recognition starts
+recognition.addEventListener('start', () => {
+  // Update the search input placeholder text to indicate listening
+  searchInput.placeholder = 'Listening...';
+});
+
+// Add an event listener for the end event when speech recognition ends
+recognition.addEventListener('end', () => {
+  // Reset the search input placeholder text when speech recognition ends
+  searchInput.placeholder = 'Search';
+});
+
+// Add an event listener for the result event when speech recognition is successful
+recognition.addEventListener('result', (event) => {
+  // Get the recognized text from the result
+  const speechResult = event.results[0][0].transcript;
+
+  // Set the search input value to the recognized text
+  searchInput.value = speechResult;
+
+  // Trigger the fetchData function with the recognized text
+  fetchData(speechResult, 12);
+});
+
+// Add an event listener for the end event when speech recognition ends
+recognition.addEventListener('end', () => {
+  // Reset the search input placeholder text when speech recognition ends
+  searchInput.placeholder = 'Search';
+});
+
+// Add an event listener for the error event if there is an issue with speech recognition
+recognition.addEventListener('error', (event) => {
+  console.error('Speech recognition error:', event.error);
+  // Reset the search input placeholder text on error
+  searchInput.placeholder = 'Search';
+});
+
+// Add an event listener for the mic div to initiate speech recognition
+document.querySelector('.mic').addEventListener('click', () => {
+  recognition.start();
+});
+
 // Function to get video information based on video ID
 async function getVideoInfo(videoId) {
   let response = await fetch(`${BASE_URL}/videos?key=${API_KEY}&part=statistics&id=${videoId}`);
@@ -55,7 +112,6 @@ async function getSubscription(channelid) {
 
 // Function to display video cards on the page
 async function displayCards(data, displayBody) {
-  console.log("kriika");
   displayBody.innerHTML = "";
   for (const ele of data) {
     let viewCountObj = await getVideoInfo(ele.id.videoId);

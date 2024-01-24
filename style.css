@@ -124,7 +124,12 @@ body {
     align-items: center;
     width: 10%;
     border: 2px solid #d3d3d3;
-    ;
+    cursor: pointer;
+}
+
+.searchDiv:hover{
+    /* background-color */
+    background-image : linear-gradient(to right, #47b5ff , #00aaff);
 }
 
 .searchDiv>i {
@@ -143,6 +148,13 @@ body {
     align-items: center;
     background-color: #f8f8f8;
     font-size: 20px;
+    color: grey;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.mic:hover{
+    background-image : linear-gradient(to right, #47b5ff , #00aaff);
 }
 
 .profile {
