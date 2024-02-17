@@ -20,33 +20,37 @@
     <!-- Loader element -->
     <div id="loader" class="loader"></div>
 
+    <div class="theme-toggle">
+        <input type="checkbox" id="theme-toggle-checkbox">
+        <label for="theme-toggle-checkbox" class="theme-toggle-label"></label>
+      </div>
     <!-- Navigation bar section -->
     <nav class="myNav youtubeMain">
         <!-- Left section of the navigation bar -->
         <div class="leftNav">
             <!-- Search input and icon -->
-            <i id="menubar" class="fa-sharp fa-solid fa-bars fontIcon" style="color: #0d0d0d; ;"></i>
-            <img src="https://t3.ftcdn.net/jpg/03/00/38/90/240_F_300389025_b5hgHpjDprTySl8loTqJRMipySb1rO0I.jpg">
+            <i id="menubar" class="fa-sharp fa-solid fa-bars fontIcon"></i>
+            <img src="./youtube-logo.png">
         </div>
         <div class="centreNav">
             <div class="inputDiv">
-                <input id="searchInput" type="text" placeholder="search">
+                <input id="searchInput" type="text" placeholder="search" style="background: none;">
 
                 <div id="searchDiv" class="searchDiv">
-                    <i class="fa-solid fa-magnifying-glass fontIcon" style="color: #0a0a0a;"></i>
+                    <i class="fa-solid fa-magnifying-glass fontIcon"></i>
                 </div>
             </div>
             <!-- Microphone icon -->
             <div class="mic">
-                <i class="fa-solid fa-microphone" style="color: #0c0d0d;"></i>
+                <i class="fa-solid fa-microphone" style="font-size: 30px;"></i>
             </div>
         </div>
         <!-- Right section of the navigation bar -->
         <div class="rightNav">
             <!-- Video, Bell, and Magnifying glass icons -->
-            <i class="fa-solid fa-video fontIcon" style="color: #0a0a0b;"></i>
-            <i class="fa-regular fa-bell fontIcon" style="color: #050505;"></i>
-            <i class="fa-solid fa-magnifying-glass fontIcon" style="color: #0a0a0a;"></i>
+            <i class="fa-solid fa-video fontIcon"></i>
+            <i class="fa-regular fa-bell fontIcon"></i>
+            <i class="fa-solid fa-magnifying-glass fontIcon"></i>
             <!-- Placeholder for user profile (letter 'S' in this case) -->
             <div id="profile" class="profile">S</div>
         </div>
@@ -58,77 +62,77 @@
             <!-- Menu cards for Home, Shorts, Subscription, etc. -->
             <!-- Icons and text for various menu options -->
             <div class="menuCards mo">
-                <i class="fa-solid fa-house" style="color: #111212;"></i>
+                <i class="fa-solid fa-house"></i>
                 <p>Home</p>
             </div>
             <div class="menuCards mo">
-                <i class="fa-solid fa-bolt" style="color: #0c0d0d;"></i>
+                <i class="fa-solid fa-bolt"></i>
                 <p>Shorts</p>
             </div>
             <div class="menuCards mo">
-                <i class="fa-brands fa-youtube" style="color: #0c0d0d;"></i>
+                <i class="fa-brands fa-youtube"></i>
                 <p>Subscription</p>
             </div>
             <!-- Horizontal line separator -->
             <div class="horizontalLine"></div>
-            <div class="menuCards mo">
+            <div>
                 <h3>You</h3>
             </div>
             <div class="menuCards mo">
-                <i class="fa-solid fa-user" style="color: #131416;"></i>
+                <i class="fa-solid fa-user"></i>
                 <p>Your channel</p>
             </div>
             <div class="menuCards mo">
-                <i class="fa-solid fa-clock-rotate-left" style="color: #121212;"></i>
+                <i class="fa-solid fa-clock-rotate-left"></i>
                 <p>History</p>
             </div>
             <div class="menuCards mo">
-                <i class="fa-solid fa-video" style="color: #141414;"></i>
+                <i class="fa-solid fa-video"></i>
                 <p>Your videos</p>
             </div>
             <div class="menuCards mo">
-                <i class="fa-regular fa-clock" style="color: #141414;"></i>
+                <i class="fa-regular fa-clock"></i>
                 <p>Watch later</p>
             </div>
             <!-- HTML structure for the "show more" button and additional menu items -->
             <div class="menuCards mo" id="showMoreButton">
-                <i class="fa-solid fa-angle-down" style="color: #070808;"></i>
+                <i class="fa-solid fa-angle-down"></i>
                 <p>show more</p>
             </div>
             <!-- Horizontal line separator and Explore section -->
-            <div id="hiddenOptionsContainer" style="display: none;">
+            <!-- <div id="hiddenOptionsContainer" style="display: none;"> -->
                 <div class="horizontalLine"></div>
                 <br>
                 <div>
                     <h3>Explore</h3>
                 </div>
                 <!-- Explore menu items for Shopping, Music, Movie, etc. -->
-                <div class="menuCards mo">
-                    <i class="fa-solid fa-cart-shopping" style="color: #0f0f10;"></i>
+                <div class="menuCards mo ">
+                    <i class="fa-solid fa-cart-shopping"></i>
                     <p>Shopping</p>
                 </div>
                 <div class="menuCards mo">
-                    <i class="fa-solid fa-headphones" style="color: #0f0f0f;"></i>
+                    <i class="fa-solid fa-headphones"></i>
                     <p>Music</p>
                 </div>
                 <div class="menuCards mo">
-                    <i class="fa-solid fa-clapperboard" style="color: #0a0a0b;"></i>
+                    <i class="fa-solid fa-clapperboard"></i>
                     <p>Movie</p>
                 </div>
                 <div class="menuCards mo">
-                    <i class="fa-solid fa-gamepad" style="color: #0a0a0a;"></i>
+                    <i class="fa-solid fa-gamepad"></i>
                     <p>Gamming</p>
                 </div>
                 <div class="menuCards mo">
-                    <i class="fa-regular fa-newspaper" style="color: #0c0d0d;"></i>
+                    <i class="fa-regular fa-newspaper"></i>
                     <p>News</p>
                 </div>
                 <div class="menuCards mo">
-                    <i class="fa-solid fa-medal" style="color: #131415;"></i>
+                    <i class="fa-solid fa-medal"></i>
                     <p>Sports</p>
                 </div>
                 <div class="menuCards mo">
-                    <i class="fa-regular fa-lightbulb" style="color: #202122;"></i>
+                    <i class="fa-regular fa-lightbulb"></i>
                     <p>Learning</p>
                 </div>
                 <!-- Horizontal line separator and Copyright section -->
@@ -147,7 +151,7 @@
                         @ 2023 Google LLC
                     </p>
                 </div>
-            </div>
+            <!-- </div> -->
         </div>
         <!-- Right section containing filter options and scrollable content -->
         <div class="rightSection">
@@ -211,22 +215,22 @@
         <!-- Mobile menu cards for Home, Shorts, Subscription, etc. -->
         <!-- Icons and text for various mobile menu options -->
         <div class="MENUCARDS mo">
-            <i class="fa-solid fa-house" style="color: #111212;"></i>
+            <i class="fa-solid fa-house"></i>
             <p>Home</p>
         </div>
         <div class="MENUCARDS mo">
-            <i class="fa-solid fa-bolt" style="color: #0c0d0d;"></i>
+            <i class="fa-solid fa-bolt"></i>
             <p>Shorts</p>
         </div>
         <div class="MENUCARDS mo">
-            <i class="fa-solid fa-circle-plus" style="color: #000000;"></i>
+            <i class="fa-solid fa-circle-plus"></i>
         </div>
         <div class="MENUCARDS mo">
-            <i class="fa-solid fa-clock-rotate-left" style="color: #121212;"></i>
+            <i class="fa-solid fa-clock-rotate-left"></i>
             <p>History</p>
         </div>
         <div class="MENUCARDS mo">
-            <i class="fa-brands fa-youtube" style="color: #0c0d0d;"></i>
+            <i class="fa-brands fa-youtube"></i>
             <p>Subscription</p>
         </div>
         <!-- Mobile profile section -->

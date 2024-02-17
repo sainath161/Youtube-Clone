@@ -43,8 +43,6 @@ body {
     top: 0;
     right: 0;
     left: 0;
-    background-color: white;
-
 }
 
 .myNav {
@@ -79,8 +77,6 @@ body {
 
 .rightNav {
     display: flex;
-
-
     align-items: center;
     flex: .5;
     justify-content: right;
@@ -89,7 +85,7 @@ body {
 
 
 .fontIcon {
-
+    cursor: pointer;
     font-size: 30px;
     font-weight: 100;
 }
@@ -99,7 +95,6 @@ body {
     display: flex;
     height: 100%;
     width: 70%;
-    background-color: #f8f8f8;
     border-radius: 20px;
     /* border:2px solid  #d3d3d3; */
 }
@@ -125,11 +120,12 @@ body {
     width: 10%;
     border: 2px solid #d3d3d3;
     cursor: pointer;
+    background: none;
 }
 
 .searchDiv:hover{
-    /* background-color */
-    background-image : linear-gradient(to right, #47b5ff , #00aaff);
+    background-color: #ccc;
+    color: #222;
 }
 
 .searchDiv>i {
@@ -139,22 +135,20 @@ body {
 
 .mic,
 .profile {
-
-    height: 45px;
-    width: 45px;
+    height: 50px;
+    width: 50px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f8f8f8;
     font-size: 20px;
-    color: grey;
     margin-left: 10px;
     cursor: pointer;
 }
 
 .mic:hover{
-    background-image : linear-gradient(to right, #47b5ff , #00aaff);
+    background-color: #ccc;
+    color: #222;
 }
 
 .profile {
@@ -204,7 +198,7 @@ main {
 }
 
 #menubar:hover {
-    background-color: #e1e0e0;
+    background-color: #333;
 }
 
 
@@ -212,7 +206,7 @@ main {
 
     width: 95%;
     height: 55px;
-    background-color: white;
+    background-color: transparent;
     display: flex;
 
     padding: 10px 15px;
@@ -226,7 +220,6 @@ main {
 
     width: 30%;
     height: 55px;
-    background-color: white;
     display: flex;
     flex-direction: column;
 
@@ -247,7 +240,9 @@ main {
 
 .menuCards:hover,
 .MENUCARDS:hover {
-    background-color: #e1e0e0;
+    background-color: #ccc;
+    color: #222;
+    cursor: pointer;
 }
 
 .copyright {
@@ -605,9 +600,90 @@ selected Video Page */
         overflow-y: auto;
 
     }
-
+    qD
     .selectedVideo {
         flex-direction: column;
     }
 
 }
+
+/* CSS for the theme toggle button */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+  
+  .theme-toggle-label {
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+    background-color: #ccc;
+    border-radius: 20px;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .theme-toggle-label::before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 2px;
+    transition: transform 0.3s ease;
+  }
+  
+  #theme-toggle-checkbox:checked + .theme-toggle-label {
+    background-color: #333;
+  }
+  
+  #theme-toggle-checkbox:checked + .theme-toggle-label::before {
+    transform: translateX(20px);
+  }
+
+  /* CSS for the dark theme */
+.dark-theme {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  /* Apply dark theme to nav */
+  .dark-theme nav {
+    background-color: #222; /* Adjust as needed */
+    color: #fff; /* Adjust as needed */
+  }
+  
+  /* Apply dark theme to main section */
+  .dark-theme main {
+    background-color: #444; /* Adjust as needed */
+    color: #fff; /* Adjust as needed */
+  }
+  
+  /* Apply dark theme to links inside nav */
+  .dark-theme nav a {
+    color: #fff; /* Adjust as needed */
+  }
+  
+  /* Apply dark theme to links inside main */
+  .dark-theme main a {
+    color: #fff; /* Adjust as needed */
+  }
+  
+  
+  /* Apply dark theme to menuRightSection text */
+.dark-theme .rightSection {
+    color: #fff; /* Adjust as needed */
+  }
+  
+  .menuRightSection{
+    background: transparent;
+  }
+
+  .menuOptions{
+    background: transparent;
+  }
