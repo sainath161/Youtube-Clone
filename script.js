@@ -264,28 +264,25 @@ function hideLoader() {
 }
 
 
-// const showMoreButton = document.getElementById('showMoreButton');
-// const hiddenOptionsContainer = document.getElementById('hiddenOptionsContainer');
-// showMoreButton.addEventListener('click', () => {
-//   if(hiddenOptionsContainer.style.display === 'none' || hiddenOptionsContainer.style.display === '') {
-//     hiddenOptionsContainer.style.display = 'block';
-//     showMoreButton.innerText = "Show less";
-//   } else {
-//     hiddenOptionsContainer.style.display = 'none';
-//     showMoreButton.textContent = 'Show More';
-//   }
-// });
-
-// Get the theme toggle checkbox element
-let themeToggleCheckbox = document.getElementById('theme-toggle-checkbox');
-
-// Add event listener to toggle the theme
-themeToggleCheckbox.addEventListener('change', function() {
-  if (this.checked) {
-    // Switch to dark theme
-    document.body.classList.add('dark-theme');
+const showMoreButton = document.getElementById('showMoreButton');
+const hiddenOptionsContainer = document.getElementById('hiddenOptionsContainer');
+showMoreButton.addEventListener('click', () => {
+  if(hiddenOptionsContainer.style.display === 'none' || hiddenOptionsContainer.style.display === '') {
+    hiddenOptionsContainer.style.display = 'block';
+    showMoreButton.innerText = "Show less";
   } else {
-    // Switch to light theme
-    document.body.classList.remove('dark-theme');
+    hiddenOptionsContainer.style.display = 'none';
+    showMoreButton.textContent = 'Show More';
   }
 });
+
+// Add event listener to toggle the theme
+document.querySelector('.theme-toggle-label').addEventListener('click', function() {
+  const body = document.body;
+  if (body.classList.contains('dark-theme')) {
+    body.classList.remove('dark-theme');
+  } else {
+    body.classList.add('dark-theme');
+  }
+});
+
